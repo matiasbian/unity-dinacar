@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Speedometer : MonoBehaviour
 {
     [SerializeField] Image mark;
+    [SerializeField] TextMeshProUGUI speedText;
     [SerializeField] HQ.PlayerController player;
 
     /// <summary>
@@ -26,6 +28,8 @@ public class Speedometer : MonoBehaviour
 
     void OnSpeedChange(float speed)
     {
-        mark.rectTransform.eulerAngles = new Vector3(0, 0,  120 -  (speed * 0.7f));
+        float MAX_SPEED_MULTIPLIER = (speed / player.MAX_SPEED) * 0.8f;
+        mark.rectTransform.eulerAngles = new Vector3(0, 0,  120 -  (speed * MAX_SPEED_MULTIPLIER));
+        speedText.text = Mathf.RoundToInt(speed).ToString();
     }
 }

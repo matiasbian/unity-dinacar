@@ -9,6 +9,7 @@ public class TrackObject: ScriptableObject
     public Line[] lines { get; protected set; }
     [HideInInspector]
     public TrackModifier[] Modifier;
+    public CarModifier[] Cars;
     public float roadWidth;
     public int segmentLength;
     public float trackHeight;
@@ -29,17 +30,9 @@ public class TrackObject: ScriptableObject
             line.z = i * segmentLength;
             line.w = roadWidth;
 
-            foreach (var m in Modifier)
-            {
-                if (!m.disabled && m.Segments.InRange(i) && i % m.frequency == 0)
-                {
-                    line.curve += m.curve;
-                    line.spriteX = m.spriteX;
-                    line.y += Mathf.Sin(i * m.h) * trackHeight;
-                    line.sprite = m.sprite ?? line.sprite;
-                    line.flipX = m.flipX;
-                }
-            }
+            line = ProcessModifier(Modifier, i, line);
+
+           
 
             //if (i > 300 && i < 700) line.curve = 0.5f;
             //if (i > 1100) line.curve = -0.7f;
@@ -52,6 +45,51 @@ public class TrackObject: ScriptableObject
 
             //if (i > 750) line.y = Mathf.Sin(i / 30.0f) * trackHeight;
         }
+    }
+
+    float time;
+    public void UpdateCars () 
+    {
+        time += Time.deltaTime;
+        if (time < 5) return;
+        time = 0;
+        Debug.Log("UpdateCars");
+
+        for (int i = 0; i < Length; i++)
+        {
+            ref Line line = ref lines[i];
+            line = ProcessCars(Cars, i, line);
+        }
+    }
+
+    Line ProcessModifier (TrackModifier[] modifier, int i, Line line) {
+         foreach (var m in modifier)
+        {
+            if (!m.disabled && m.Segments.InRange(i) && i % m.frequency == 0)
+            {
+                line.curve += m.curve;
+                line.spriteX = m.spriteX;
+                line.y += Mathf.Sin(i * m.h) * trackHeight;
+                line.sprite = m.sprite ?? line.sprite;
+                line.flipX = m.flipX;
+            }
+        }
+        return line;
+    }
+
+    Line ProcessCars (CarModifier[] modifier, int i, Line line) {
+         foreach (var m in modifier)
+        {
+            m.Segments += new Vector2Int(0, 0);
+            if (!m.disabled && m.Segments.InRange(i) && i % m.frequency == 0)
+            {
+                line.spriteX = m.spriteX;
+                line.y += Mathf.Sin(i * m.h) * trackHeight;
+                line.sprite = m.sprite ?? line.sprite;
+                line.flipX = m.flipX;
+            }
+        }
+        return line;
     }
 
 }

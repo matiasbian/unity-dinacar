@@ -9,7 +9,7 @@ namespace HQ
         [SerializeField] float ACCELERATION = 10f;
         [SerializeField] float BRAKE_POWER = 8.5f;
         [SerializeField] float DEACCELERATION_POWER = 2f;
-        [SerializeField] float MAX_SPEED = 200;
+        [SerializeField] public float MAX_SPEED = 200;
 
         // Move log X speed
         const float DIVIDER = 6.1f;
@@ -38,8 +38,6 @@ namespace HQ
             Steering();
             HandleAcceleration();
             
-            Debug.Log(" y " + mSpeed);
-
             if (Input.GetKey(KeyCode.Tab)) body.speed *= 3;
             if (Input.GetKey(KeyCode.W)) hQcamera.cameraHeight += 100;
             if (Input.GetKey(KeyCode.S)) hQcamera.cameraHeight -= 100;
@@ -54,7 +52,7 @@ namespace HQ
             } else if (vertical < 0) {
                 mSpeed = Brake(mSpeed, vertical);
             } else {
-                mSpeed = Accelerate(mSpeed, -1);
+                mSpeed = Accelerate(mSpeed, - DEACCELERATION_POWER);
             }
 
             if (lastSpeed != mSpeed) {
