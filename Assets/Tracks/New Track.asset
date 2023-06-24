@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd58ce2d624a15439d1a943c062995f, type: 3}
   m_Name: New Track
   m_EditorClassIdentifier: 
-  Length: 1600
+  Length: 2500
   Modifier:
   - label: right turn
     disabled: 0
-    h: 0.03333334
+    h: 0
     spriteX: 0
     flipX: 0
     sprite: {fileID: 0}
@@ -24,12 +24,12 @@ MonoBehaviour:
     frequency: 1
     curve: 0.5
   - label: hill
-    disabled: 0
+    disabled: 1
     h: 0.033333335
     spriteX: 2
     flipX: 0
     sprite: {fileID: 0}
-    Segments: {x: 750, y: 1800}
+    Segments: {x: 750, y: 1200}
     frequency: 1
     curve: 0
   - label: left turn
@@ -117,10 +117,21 @@ MonoBehaviour:
     h: 0
     spriteX: 0
     flipX: 0
-    sprite: {fileID: 21300000, guid: 3338174c69520d248b12ceb44ee4ee53, type: 3}
-    Segments: {x: 0, y: 700}
-    frequency: 50
-    speed: 2
-  roadWidth: 2500
+    sprite: {fileID: 3470340281606941108, guid: febea6990a94e844f95f6d722a7798eb,
+      type: 3}
+    Segments: {x: 50, y: 50}
+    frequency: 200
+    speed: 5
+  - label: carro
+    disabled: 0
+    h: 0
+    spriteX: 0
+    flipX: 0
+    sprite: {fileID: 3470340281606941108, guid: febea6990a94e844f95f6d722a7798eb,
+      type: 3}
+    Segments: {x: 150, y: 150}
+    frequency: 200
+    speed: 4
+  roadWidth: 2000
   segmentLength: 200
-  trackHeight: 1800
+  trackHeight: 2500

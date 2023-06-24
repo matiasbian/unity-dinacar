@@ -133,17 +133,25 @@ public class HqRenderer : MonoBehaviour
     public void drawSprite(ref Line line)
     {
         if (line.Y < -screenHeight2) { return; }
+
         Sprite s = line.sprite;
-        if (s == null) { return; }
+        Sprite s2 = line.spriteCar;
+
+        if (s != null) RenderSprite(s, line, line.spriteX, true);
+        if (s2 != null) RenderSprite(s2, line, line.spriteXCar, false);
+        
+    }
+
+    void RenderSprite (Sprite s, Line line, float spriteX, bool flipable) {
         var w = s.rect.width;
         var h = s.rect.height;
 
-        float destX = line.X + line.W * line.spriteX + screenWidth2;
+        float destX = line.X + line.W * spriteX + screenWidth2;
         float destY = -line.Y + screenHeight2;
         float destW = w * line.scale * screenWidth2 * SpriteScale;
         float destH = h * line.scale * screenWidth2 * SpriteScale;
 
-        destX += destW * Mathf.Sign(line.spriteX) / 2; //offsetX
+        destX += destW * Mathf.Sign(spriteX) / 2; //offsetX
         destY += destH * (-1);    //offsetY
 
         float clipH = -line.Y + line.clip;
@@ -153,7 +161,7 @@ public class HqRenderer : MonoBehaviour
 
         Rect target = new Rect(destX, destY, destW, destH);
         Rect source = new Rect(Vector2Int.zero, new Vector2(1, 1 - clipH / destH));
-        Renderer.draw(source, s, target, line.flipX);
+        Renderer.draw(source, s, target, flipable && line.flipX);
     }
     private void addQuad(Material c, float x1, float y1, float w1, float x2, float y2, float w2, float z)
     {
@@ -310,8 +318,10 @@ public class HqRenderer : MonoBehaviour
             addQuad(grass, 0, p.Y, screenWidth2, 0, l.Y, screenWidth2, z);
             addQuad(rumble, p.X, p.Y, p.W + p.scale * rumbleWidth * screenWidth2, l.X, l.Y, l.W + l.scale * rumbleWidth * screenWidth2, z);
             addQuad(road, p.X, p.Y, p.W, l.X, l.Y, l.W, z);
-            //var p_rumbleWidth = p.W + p.scale * rumbleWidth * screenWidth2;
-            //var l_rumbleWidth = l.W + l.scale * rumbleWidth * screenWidth2;
+            
+            float offset = track.roadWidth / 300f;
+            var p_rumbleWidth = p.W + p.scale * rumbleWidth * screenWidth2 * - offset;
+            var l_rumbleWidth = l.W + l.scale * rumbleWidth * screenWidth2 * - offset;
             //addQuad(grass, p.X - screenWidth2 - p_rumbleWidth, p.Y, screenWidth2, l.X - screenWidth2 - l_rumbleWidth, l.Y, screenWidth2, z);
             //addQuad(grass, p.X + screenWidth2 + p_rumbleWidth, p.Y, screenWidth2, l.X + screenWidth2 + l_rumbleWidth, l.Y, screenWidth2, z);
             //addQuad(rumble, p.X - p_rumbleWidth, p.Y, p.scale* rumbleWidth* screenWidth2, l.X - l_rumbleWidth, l.Y, l.scale*screenWidth2 * rumbleWidth, z);
@@ -320,7 +330,10 @@ public class HqRenderer : MonoBehaviour
             addQuad(road, p.X, p.Y, p.W, l.X, l.Y, l.W, z);
             if ((n / 3) % 2 == 0)
             {
-                addQuad(dashline, p.X, p.Y * 1.1f, p.W * 0.05f, l.X, l.Y * 1.1f, l.W * 0.05f, z);
+                //addQuad(dashline, p.X, p.Y * 1.1f, p.W * 0.05f, l.X, l.Y * 1.1f, l.W * 0.05f, z);                
+
+                addQuad(dashline, p.X + p_rumbleWidth, p.Y * 1.1f, p.W * 0.05f, l.X + l_rumbleWidth, l.Y * 1.1f, l.W * 0.05f, z);
+                addQuad(dashline, p.X - p_rumbleWidth, p.Y * 1.1f, p.W * 0.05f, l.X - l_rumbleWidth, l.Y * 1.1f, l.W * 0.05f, z);
             }
 
             counter++;

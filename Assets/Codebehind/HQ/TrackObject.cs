@@ -16,12 +16,13 @@ public class TrackObject: ScriptableObject
 
     private void OnEnable()
     {
+        speedTime = 0;
         Construct();
     }
 
     protected virtual void Construct()
     {
-        Length = 1600;
+        Length = 2500;
         lines = new Line[Length];
 
         for (int i = 0; i < Length; i++)
@@ -48,12 +49,11 @@ public class TrackObject: ScriptableObject
     }
 
     float time;
-    public void UpdateCars () 
+    float speedTime = 0;
+    public void UpdateCars (float delta) 
     {
-        time += Time.deltaTime;
-        if (time < 5) return;
+        speedTime += delta * 10;
         time = 0;
-        Debug.Log("UpdateCars");
 
         for (int i = 0; i < Length; i++)
         {
@@ -78,17 +78,18 @@ public class TrackObject: ScriptableObject
     }
 
     Line ProcessCars (CarModifier[] modifier, int i, Line line) {
+        var renderCar = false;
          foreach (var m in modifier)
         {
-            m.Segments += new Vector2Int(0, 0);
-            if (!m.disabled && m.Segments.InRange(i) && i % m.frequency == 0)
+            if (Mathf.RoundToInt(m.Segments.y + (speedTime * m.speed) ) == i)
             {
-                line.spriteX = m.spriteX;
+                line.spriteXCar = m.spriteX;
                 line.y += Mathf.Sin(i * m.h) * trackHeight;
-                line.sprite = m.sprite ?? line.sprite;
-                line.flipX = m.flipX;
+                line.spriteCar = m.sprite ?? line.spriteCar;
+                renderCar = true;
             }
         }
+        if (!renderCar) line.spriteCar = null;
         return line;
     }
 

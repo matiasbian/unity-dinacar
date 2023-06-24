@@ -8,9 +8,16 @@ public class RenderEnemyCars : MonoBehaviour
     TrackObject trackObject;
 
     // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Start is called on the frame when a script is enabled just before
+    /// any of the Update methods is called the first time.
+    /// </summary>
+    void Start()
     {
         trackObject = GetComponent<HqRenderer>().track;
-        trackObject.UpdateCars();
+    }
+    void FixedUpdate()
+    {
+        trackObject.UpdateCars(Time.fixedDeltaTime);
     }
 }
