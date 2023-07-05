@@ -22,7 +22,7 @@ public class TrackObject: ScriptableObject
 
     protected virtual void Construct()
     {
-        Length = 2500;
+        //Length = Mathf.RoundToInt(trackHeight);
         lines = new Line[Length];
 
         for (int i = 0; i < Length; i++)
@@ -32,19 +32,6 @@ public class TrackObject: ScriptableObject
             line.w = roadWidth;
 
             line = ProcessModifier(Modifier, i, line);
-
-           
-
-            //if (i > 300 && i < 700) line.curve = 0.5f;
-            //if (i > 1100) line.curve = -0.7f;
-
-            //if (i < 300 && i % 20 == 0) { line.spriteX = -2.5f; line.sprite = sprites[0]; }
-            //if (i % 17 == 0) { line.spriteX = 2.0f; line.sprite = sprites[1]; }
-            //if (i > 300 && i % 20 == 0) { line.spriteX = -1.7f; line.sprite = sprites[2]; }
-            //if (i > 800 && i % 20 == 0) { line.spriteX = -1.3f; line.sprite = sprites[3]; }
-            //if (i == 400) { line.spriteX = -1.3f; line.sprite = sprites[4]; }
-
-            //if (i > 750) line.y = Mathf.Sin(i / 30.0f) * trackHeight;
         }
     }
 
@@ -81,9 +68,9 @@ public class TrackObject: ScriptableObject
         var renderCar = false;
          foreach (var m in modifier)
         {
-            if (Mathf.RoundToInt(m.Segments.y + (speedTime * m.speed) ) == i)
+            if (Mathf.RoundToInt(m.position + (speedTime * m.speed) ) == i)
             {
-                line.spriteXCar = m.spriteX;
+                line.spriteXCar = m.GetLane();
                 line.y += Mathf.Sin(i * m.h) * trackHeight;
                 line.spriteCar = m.sprite ?? line.spriteCar;
                 renderCar = true;
@@ -91,6 +78,10 @@ public class TrackObject: ScriptableObject
         }
         if (!renderCar) line.spriteCar = null;
         return line;
+    }
+
+    public int GetCarUpdatedPos (CarModifier car) {
+        return Mathf.RoundToInt(car.position + (speedTime * car.speed));
     }
 
 }

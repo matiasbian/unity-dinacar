@@ -8,10 +8,9 @@ public class HqRenderer : MonoBehaviour
     public RenderWindow Renderer;
 
     public Camera targetCamera;
-    public SpriteRenderer BG;
+    public Paralax[] paralaxes;
     public SpriteRenderer Plane;
     public SpriteRenderer FG;
-    public Sprite BGSprite;
     public int PPU;
 
     public TrackObject track;
@@ -32,7 +31,6 @@ public class HqRenderer : MonoBehaviour
     public int cameraHeight = 1500; //pixels?
     public float cameraOffset = 0;
     public float centrifugal = 0.1f;
-    public float paralaxSpeed = 0.1f;
     public bool drawRoad;
     public bool drawSprites;
     public int rumbleWidth;
@@ -71,9 +69,6 @@ public class HqRenderer : MonoBehaviour
     private float speed;
     [NonSerialized]
     private float prevTrip;
-    [NonSerialized]
-    private Vector2 bgOffset;
-
     private void OnEnable()
     {
 #if UNITY_EDITOR
@@ -97,17 +92,20 @@ public class HqRenderer : MonoBehaviour
         tex1.filterMode = FilterMode.Point;
         FG.sprite = Sprite.Create(tex1, new Rect(0, 0, screenWidthRef, screenHeightRef), new Vector2(0.5f,0.5f), PPU);
         FG.sprite.name = "runtimeFG";
-
+        
         Texture2D tex2 = new Texture2D(screenWidthRef, screenHeightRef, TextureFormat.RGBA32, false);
         tex2.filterMode = FilterMode.Point;
         Plane.sprite = Sprite.Create(tex2, new Rect(0, 0, screenWidthRef, screenHeightRef), new Vector2(0.5f, 0.5f), PPU);
         Plane.sprite.name = "runtimePlane";
-        
-        Texture2D tex3 = new Texture2D(BGSprite.texture.width,  BGSprite.texture.height, TextureFormat.RGBA32, false);
-        tex2.filterMode = FilterMode.Point;
-        BG.sprite = Sprite.Create(tex3, BGSprite.rect, new Vector2(0.5f, 0.5f), PPU);
-        BG.sprite.name = "runtimeBG";
 
+        foreach (var p in paralaxes)
+        {
+            Texture2D tex3 = new Texture2D(p.background.texture.width,  p.background.texture.height, TextureFormat.RGBA32, false);
+            tex2.filterMode = FilterMode.Point;
+            p.spriteRenderer.sprite = Sprite.Create(tex3, p.background.rect, new Vector2(0.5f, 0.5f), PPU);
+            p.spriteRenderer.sprite.name = "runtimeBG";
+        }
+        
         quad = new Quad[] {
             new Quad(quadCapacity), 
             new Quad(quadCapacity), 
@@ -221,23 +219,26 @@ public class HqRenderer : MonoBehaviour
 
     private void DrawBackground()
     {
-        //Good enough
-        _renderTexture = RenderTexture.GetTemporary(BG.sprite.texture.width, BG.sprite.texture.height, 0, BG.sprite.texture.graphicsFormat);
-        RenderTexture currentActiveRT = RenderTexture.active;
-        RenderTexture.active = _renderTexture;
-        //Work in the pixel matrix of the texture resolution.
-        GL.PushMatrix();
-        GL.LoadPixelMatrix(0, screenWidthRef, screenHeightRef, 0);
+        
 
-        bgOffset += new Vector2(paralaxSpeed/PPU * speed * Time.deltaTime * track.lines[playerPos].curve, 0);
+        foreach (var p in paralaxes) {
+            //Good enough
+            _renderTexture = RenderTexture.GetTemporary(p.spriteRenderer.sprite.texture.width, p.spriteRenderer.sprite.texture.height, 0, p.spriteRenderer.sprite.texture.graphicsFormat);
+            RenderTexture currentActiveRT = RenderTexture.active;
+            RenderTexture.active = _renderTexture;
+            //Work in the pixel matrix of the texture resolution.
+            GL.PushMatrix();
+            GL.LoadPixelMatrix(0, screenWidthRef, screenHeightRef, 0);
+            p.bgOffset += new Vector2(p.speed/PPU * speed * Time.deltaTime * track.lines[playerPos].curve, 0);
 
-        Graphics.Blit(BGSprite.texture, _renderTexture, Vector2.one, bgOffset, 0, 0);
+            Graphics.Blit(p.background.texture, _renderTexture, Vector2.one, p.bgOffset, 0, 0);
 
-        Graphics.CopyTexture(_renderTexture, BG.sprite.texture);
+            Graphics.CopyTexture(_renderTexture, p.spriteRenderer.sprite.texture);
 
-        GL.PopMatrix();
-        Graphics.SetRenderTarget(currentActiveRT);
-        RenderTexture.ReleaseTemporary(_renderTexture);
+            GL.PopMatrix();
+            Graphics.SetRenderTarget(currentActiveRT);
+            RenderTexture.ReleaseTemporary(_renderTexture);
+        }
     }
 
     private void PostRender(Camera cam)
@@ -339,4 +340,13 @@ public class HqRenderer : MonoBehaviour
             counter++;
         }
     }
+}
+[System.Serializable]
+public class Paralax {
+    public Sprite background;
+    public SpriteRenderer spriteRenderer;
+    public float speed;
+    [HideInInspector]
+    public Vector2 bgOffset;
+
 }

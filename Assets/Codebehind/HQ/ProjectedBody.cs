@@ -2,7 +2,7 @@
 using UnityEngine;
 namespace HQ
 {
-    class ProjectedBody : MonoBehaviour
+    public class ProjectedBody : MonoBehaviour
     {
         internal float playerX;
         internal int speed;
@@ -21,6 +21,15 @@ namespace HQ
             playerPos = trip / track.segmentLength;
             playerX = playerX - track.lines[playerPos].curve * centrifugal * speed * Time.fixedDeltaTime;
             playerX = Mathf.Clamp(playerX, -2, 2);
+            
+        }
+
+        public float GetTripPosition () {
+            return playerPos;
+        }
+
+        public float GetPlayerX () {
+            return playerX;
         }
     }
 }

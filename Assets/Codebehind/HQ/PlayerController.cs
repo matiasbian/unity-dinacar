@@ -31,6 +31,21 @@ namespace HQ
         {
             animator = GetComponent<Animator>();
         }
+
+        void OnEnable()
+        {
+            CollisionsHandler.Instance.OnCarCollision += OnCarCollision;
+        }
+
+        void OnDisable()
+        {
+            CollisionsHandler.Instance.OnCarCollision -= OnCarCollision;
+        }
+
+        void OnCarCollision () {
+            mSpeed = mSpeed / 4;
+        }
+
         private void FixedUpdate()
         {
             body.speed = 0;
@@ -47,12 +62,12 @@ namespace HQ
         {
             float vertical = Input.GetAxis("Vertical");
 
-            if (vertical > 0) {
-                mSpeed = Accelerate(mSpeed, vertical);
+            if (vertical > 0 && mSpeed <= GetMaxSpeed()) {
+                mSpeed = Accelerate(mSpeed, vertical, CollisionsHandler.Instance.GetRoadMultiplier());
             } else if (vertical < 0) {
                 mSpeed = Brake(mSpeed, vertical);
-            } else {
-                mSpeed = Accelerate(mSpeed, - DEACCELERATION_POWER);
+            } else if (mSpeed > 0) {
+                mSpeed = Accelerate(mSpeed, - DEACCELERATION_POWER, 1 / CollisionsHandler.Instance.GetRoadMultiplier());
             }
 
             if (lastSpeed != mSpeed) {
@@ -61,6 +76,7 @@ namespace HQ
             }
         
             body.speed = Mathf.RoundToInt(mSpeed);
+
         }
 
         void Steering () {
@@ -69,10 +85,15 @@ namespace HQ
             animator.SetFloat("Steering", horizontal);
         }
 
-        float Accelerate (float currentSpeed, float vertical) 
+        float Accelerate (float currentSpeed, float vertical, float multiplier) 
         {
-            float logSpeed = currentSpeed + (ACCELERATION * Time.fixedDeltaTime * vertical);
-            return Mathf.Clamp(logSpeed, 0, MAX_SPEED);
+            float logSpeed = currentSpeed + (ACCELERATION * Time.fixedDeltaTime * vertical * multiplier);
+
+            return logSpeed;
+        }
+
+        float GetMaxSpeed () {
+            return MAX_SPEED * CollisionsHandler.Instance.GetRoadMultiplier();
         }
 
         float Brake (float currentSpeed, float vertical) 
