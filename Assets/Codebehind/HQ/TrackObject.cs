@@ -19,7 +19,7 @@ public class TrackObject: ScriptableObject
     public int segmentLength;
     public float trackHeight;
 
-    List<Vector2> obstacles = new List<Vector2>();
+    List<CollisionElement> obstacles = new List<CollisionElement>();
 
     private void OnEnable()
     {
@@ -30,7 +30,6 @@ public class TrackObject: ScriptableObject
 
     protected virtual void Construct()
     {
-        //Length = Mathf.RoundToInt(trackHeight);
         lines = new Line[Length];
 
         for (int i = 0; i < Length; i++)
@@ -68,7 +67,7 @@ public class TrackObject: ScriptableObject
                 line.sprite = m.sprite ?? line.sprite;
                 line.flipX = m.flipX;
 
-                obstacles.Add(new Vector2(line.spriteX, i));
+                if (line.sprite) obstacles.Add(new CollisionElement(line.spriteX, i, m.label));
             }
         }
         return line;
@@ -94,9 +93,20 @@ public class TrackObject: ScriptableObject
         return Mathf.RoundToInt(car.position + (speedTime * car.speed));
     }
 
-    public List<Vector2> GetObstacles () {
+    public List<CollisionElement> GetObstacles () {
         return obstacles;
     }
 
+}
+
+public struct CollisionElement {
+
+    public CollisionElement (float posX, float posY, string label) {
+        this.position = new Vector2(posX, posY);
+        this.label = label;
+    }
+
+    public Vector2 position;
+    public string label;
 }
 

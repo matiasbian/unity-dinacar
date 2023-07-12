@@ -90,11 +90,11 @@ MonoBehaviour:
   - label: lamps1
     disabled: 0
     h: 0
-    spriteX: -2.5
+    spriteX: -2
     flipX: 0
     sprite: {fileID: -2816102195700063125, guid: af7b02d7376e40b429f40c8227118c04,
       type: 3}
-    Segments: {x: 0, y: 800}
+    Segments: {x: 0, y: 200}
     frequency: 23
     curve: 0
   - label: lamps2
@@ -110,7 +110,7 @@ MonoBehaviour:
   - label: lamps3
     disabled: 0
     h: 0
-    spriteX: -2.5
+    spriteX: -2
     flipX: 0
     sprite: {fileID: -2816102195700063125, guid: af7b02d7376e40b429f40c8227118c04,
       type: 3}
@@ -284,11 +284,11 @@ MonoBehaviour:
   - label: lamps1
     disabled: 0
     h: 0
-    spriteX: -2.5
+    spriteX: -2
     flipX: 0
     sprite: {fileID: -2816102195700063125, guid: af7b02d7376e40b429f40c8227118c04,
       type: 3}
-    Segments: {x: 0, y: 800}
+    Segments: {x: 0, y: 200}
     frequency: 23
     curve: 0
   - label: lamps2
@@ -304,7 +304,7 @@ MonoBehaviour:
   - label: lamps3
     disabled: 0
     h: 0
-    spriteX: -2.5
+    spriteX: -2
     flipX: 0
     sprite: {fileID: -2816102195700063125, guid: af7b02d7376e40b429f40c8227118c04,
       type: 3}

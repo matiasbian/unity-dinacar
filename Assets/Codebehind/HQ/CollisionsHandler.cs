@@ -53,10 +53,10 @@ public class CollisionsHandler : SingletonMonoBehaviour<CollisionsHandler>
 
     void CheckObstaclesCollision () {
         var obstacles = track.GetObstacles();
-        foreach (var obstacle in obstacles) {
-            if (InRangeY(obstacle.y - TRIP_POS_CHECK_OFFSET, body.GetTripPosition(), ENEMY_CAR_Y_OFFSET)) {
-                if (InRangeX(obstacle.x, body.GetPlayerX(), OBSTACLE_X_OFFSET)) {
-                    Debug.Log("Obstacle collision " + obstacle.y);
+        foreach (var obstacle in obstacles) { //TODO: Optimize this by starting the iteration from player position instead from 0
+            if (InRangeY(obstacle.position.y - TRIP_POS_CHECK_OFFSET, body.GetTripPosition(), ENEMY_CAR_Y_OFFSET)) {
+                if (InRangeX(obstacle.position.x, body.GetPlayerX(), OBSTACLE_X_OFFSET)) {
+                    Debug.Log("Obstacle collision " + obstacle.position +  " player X " + body.GetPlayerX() + " label " + obstacle.label);
                     OnObstacleCollision?.Invoke();
                 }
             }
@@ -64,7 +64,7 @@ public class CollisionsHandler : SingletonMonoBehaviour<CollisionsHandler>
     }
 
     void CheckCarsCollision () {
-        float len = track.Cars.Length;
+        float len = track.Cars.Length; //TODO: Optimize this by starting the iteration from player position instead from 0
         for (int i = 0; i < len; i++) {
             var car = track.Cars[i];
             carX[i] = car.spriteX;
