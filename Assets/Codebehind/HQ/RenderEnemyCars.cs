@@ -14,7 +14,7 @@ public class RenderEnemyCars : MonoBehaviour
     /// </summary>
     void Start()
     {
-        trackObject = GetComponent<HqRenderer>().track;
+        trackObject = CurrentTrackHandler.Instance.currentTrack;
     }
     void FixedUpdate()
     {

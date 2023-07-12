@@ -1,6 +1,7 @@
 ﻿using HQ;
 using UnityEngine;
-
+using System.Linq;
+using System.Collections.Generic;
 
 [CreateAssetMenu( fileName = "New Track",  menuName = "HQ/Track")]
 public class TrackObject: ScriptableObject
@@ -8,15 +9,22 @@ public class TrackObject: ScriptableObject
     public int Length;
     public Line[] lines { get; protected set; }
     [HideInInspector]
-    public TrackModifier[] Modifier;
+    //public TrackModifier[] Modifier;
+    public TrackModifier[] Tosee;
+    public TrackModifier[] turns;
+    public TrackModifier[] elements;
+    public TrackModifier[] hills;
     public CarModifier[] Cars;
     public float roadWidth;
     public int segmentLength;
     public float trackHeight;
 
+    List<Vector2> obstacles = new List<Vector2>();
+
     private void OnEnable()
     {
         speedTime = 0;
+        Tosee = turns.Concat(elements).Concat(hills).ToArray();
         Construct();
     }
 
@@ -31,7 +39,7 @@ public class TrackObject: ScriptableObject
             line.z = i * segmentLength;
             line.w = roadWidth;
 
-            line = ProcessModifier(Modifier, i, line);
+            line = ProcessModifier(Tosee, i, line);
         }
     }
 
@@ -59,6 +67,8 @@ public class TrackObject: ScriptableObject
                 line.y += Mathf.Sin(i * m.h) * trackHeight;
                 line.sprite = m.sprite ?? line.sprite;
                 line.flipX = m.flipX;
+
+                obstacles.Add(new Vector2(line.spriteX, i));
             }
         }
         return line;
@@ -82,6 +92,10 @@ public class TrackObject: ScriptableObject
 
     public int GetCarUpdatedPos (CarModifier car) {
         return Mathf.RoundToInt(car.position + (speedTime * car.speed));
+    }
+
+    public List<Vector2> GetObstacles () {
+        return obstacles;
     }
 
 }

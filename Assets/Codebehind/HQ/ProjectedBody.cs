@@ -6,11 +6,17 @@ namespace HQ
     {
         internal float playerX;
         internal int speed;
-        public TrackObject track;
         [NonSerialized]
         private int playerPos;
         public float centrifugal = 0.1f;
         public int trip;
+
+        TrackObject track;
+
+        void Start() 
+        {
+            track = CurrentTrackHandler.Instance.currentTrack;
+        }
 
         public void FixedUpdate()
         {
@@ -24,7 +30,7 @@ namespace HQ
             
         }
 
-        public float GetTripPosition () {
+        public int GetTripPosition () {
             return playerPos;
         }
 

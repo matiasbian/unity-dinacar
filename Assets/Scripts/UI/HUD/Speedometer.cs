@@ -8,6 +8,7 @@ public class Speedometer : MonoBehaviour
 {
     [SerializeField] Image mark;
     [SerializeField] TextMeshProUGUI speedText;
+    [SerializeField] TextMeshProUGUI currentSegment;
     [SerializeField] HQ.PlayerController player;
 
     /// <summary>
@@ -31,5 +32,6 @@ public class Speedometer : MonoBehaviour
         float MAX_SPEED_MULTIPLIER = (speed / player.MAX_SPEED) * 0.8f;
         mark.rectTransform.eulerAngles = new Vector3(0, 0,  120 -  (speed * MAX_SPEED_MULTIPLIER));
         speedText.text = Mathf.RoundToInt(speed).ToString();
+        currentSegment.text = player.body.GetTripPosition().ToString();
     }
 }

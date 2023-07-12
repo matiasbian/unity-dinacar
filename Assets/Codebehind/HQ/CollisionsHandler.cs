@@ -8,6 +8,7 @@ public class CollisionsHandler : SingletonMonoBehaviour<CollisionsHandler>
 
     //CONSTS
     const int TRIP_POS_CHECK_OFFSET = 8;
+    const float OBSTACLE_X_OFFSET = 0.1f;
     public float CAR_X_OFFSET = .2f;
     public float ENEMY_CAR_X_OFFSET = 0.3f;
     public float ENEMY_CAR_Y_OFFSET = 1f;
@@ -18,12 +19,14 @@ public class CollisionsHandler : SingletonMonoBehaviour<CollisionsHandler>
     public float segment, x;
     public CarModifier.Lane[] carX;
     //Actions
-    public System.Action OnCarCollision;
+    public System.Action OnCarCollision, OnObstacleCollision;
 
+    TrackObject track;
     // Start is called before the first frame update
     void Start()
     {
-        carX = new CarModifier.Lane[body.track.Cars.Length];
+        track = CurrentTrackHandler.Instance.currentTrack;
+        carX = new CarModifier.Lane[track.Cars.Length];
     }
 
     // Update is called once per frame
@@ -32,33 +35,51 @@ public class CollisionsHandler : SingletonMonoBehaviour<CollisionsHandler>
         segment = body.GetTripPosition();
         x = body.GetPlayerX();
         CheckCarsCollision();
+        CheckObstaclesCollision();
     }
 
     public float GetRoadMultiplier () {
-        if (x < -1.05f || x > 0.66f) {
-            return 0.5f;
+        if (x < -1.05f || x > 1.0f) {
+            return 0.4f;
         } else {
             return 1;
         }
     }
 
+    public float GetSteeringMultiplier () {
+        float multiplier = GetRoadMultiplier() * 2f;
+        return Mathf.Min(multiplier, 1f);
+    }
+
+    void CheckObstaclesCollision () {
+        var obstacles = track.GetObstacles();
+        foreach (var obstacle in obstacles) {
+            if (InRangeY(obstacle.y - TRIP_POS_CHECK_OFFSET, body.GetTripPosition(), ENEMY_CAR_Y_OFFSET)) {
+                if (InRangeX(obstacle.x, body.GetPlayerX(), OBSTACLE_X_OFFSET)) {
+                    Debug.Log("Obstacle collision " + obstacle.y);
+                    OnObstacleCollision?.Invoke();
+                }
+            }
+        }
+    }
+
     void CheckCarsCollision () {
-        float len = body.track.Cars.Length;
+        float len = track.Cars.Length;
         for (int i = 0; i < len; i++) {
-            var car = body.track.Cars[i];
+            var car = track.Cars[i];
             carX[i] = car.spriteX;
-            var carPos = body.track.GetCarUpdatedPos(car);
+            var carPos = track.GetCarUpdatedPos(car);
             if (car.disabled) continue;
             
             if (InRangeY(carPos - TRIP_POS_CHECK_OFFSET, body.GetTripPosition(), ENEMY_CAR_Y_OFFSET)) {
                 if (InRange(carX[i], body.GetPlayerX())) {
-                    Debug.Log("Collision");
                     OnCarCollision?.Invoke();
                 }
             }
         }
     }
 
+    #region aux
     bool InRange(CarModifier.Lane pos, float playerX) {
         switch (pos) {
             case CarModifier.Lane.Left:
@@ -72,7 +93,12 @@ public class CollisionsHandler : SingletonMonoBehaviour<CollisionsHandler>
         }
     }
 
+    bool InRangeX (float obstaclePos, float playerXPos, float RANGE) {
+        return playerXPos >= obstaclePos - RANGE && playerXPos <= obstaclePos + RANGE;
+    }
+
     bool InRangeY (float enemyCarPos, float playerYPos, float RANGE) {
         return playerYPos >= enemyCarPos - RANGE && playerYPos <= enemyCarPos + RANGE;
     }
+    #endregion
 }

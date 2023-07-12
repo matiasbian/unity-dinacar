@@ -13,7 +13,7 @@ public class HqRenderer : MonoBehaviour
     public SpriteRenderer FG;
     public int PPU;
 
-    public TrackObject track;
+    TrackObject track;
 
     public Material grass1;
     public Material grass2;
@@ -128,6 +128,12 @@ public class HqRenderer : MonoBehaviour
         };
         materials = new Material[] { grass1, grass2, rumble1, rumble2, road1, road2, dashline };
     }
+
+    void Start()
+    {
+        track = CurrentTrackHandler.Instance.currentTrack;
+    }
+
     public void drawSprite(ref Line line)
     {
         if (line.Y < -screenHeight2) { return; }

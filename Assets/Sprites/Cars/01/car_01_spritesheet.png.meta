@@ -464,6 +464,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -495,9 +497,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -3624,6 +3629,154 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      car_01_spritesheet_34: -6055153403479770180
+      car_01_spritesheet_80: -768499302195583160
+      car_01_spritesheet_37: -6200472496623081001
+      car_01_spritesheet_118: 2511150357887898912
+      car_01_spritesheet_2: -4417504108873235986
+      car_01_spritesheet_130: -1552324831462689560
+      car_01_spritesheet_3: 6377770890687356612
+      car_01_spritesheet_88: 3178103425839824443
+      car_01_spritesheet_29: 7093058450483293876
+      car_01_spritesheet_92: 3020144396503815425
+      car_01_spritesheet_101: 3734968213165805020
+      car_01_spritesheet_135: 1118973887838977125
+      car_01_spritesheet_1: 1423777902178011897
+      car_01_steering_left_02: -2085007362906167894
+      car_01_spritesheet_108: 680310984089458043
+      car_01_spritesheet_79: -940705586377777325
+      car_01_spritesheet_141: 2515074626742309223
+      car_01_steering_left_04: 621424516762692514
+      car_01_spritesheet_89: -3172501423217861556
+      car_01_spritesheet_119: -7471908387954090152
+      car_01_spritesheet_67: -7118157093407925114
+      car_01_spritesheet_16: 3198172330238386061
+      car_01_spritesheet_6: -8618772548632765662
+      car_01_spritesheet_121: -6483812328965973720
+      car_01_spritesheet_84: -6549593491900716414
+      car_01_spritesheet_112: 2760418453581049600
+      car_01_spritesheet_36: 6146680763624341098
+      car_01_spritesheet_65: 1080313929020004460
+      car_01_spritesheet_115: -7464498607370712723
+      car_01_spritesheet_85: -100883436495111823
+      car_01_spritesheet_53: 2377784826502208964
+      car_01_spritesheet_113: -957746368432033826
+      car_01_spritesheet_39: -1634116121898626245
+      car_01_spritesheet_133: 8800752500934062788
+      car_01_spritesheet_139: -8760541766078289242
+      car_01_spritesheet_140: 3522618602972822621
+      car_01_spritesheet_5: 6070931696471836160
+      car_01_spritesheet_76: 7289435394729518225
+      car_01_spritesheet_66: -7813172872607783878
+      car_01_spritesheet_104: -6346254853227047882
+      car_01_spritesheet_11: 5044091874567313542
+      car_01_spritesheet_68: 3600068151275491249
+      car_01_spritesheet_96: -1076450802206537894
+      car_01_spritesheet_81: -3808480914266790180
+      car_01_spritesheet_134: -6447143783817211576
+      car_01_spritesheet_126: -2690096116707833916
+      car_01_spritesheet_107: -4612937343817652284
+      car_01_spritesheet_70: -8948039466883981810
+      car_01_spritesheet_117: -7951379660868985501
+      car_01_spritesheet_122: 4058895578457240002
+      car_01_spritesheet_116: 3342695262932203921
+      car_01_spritesheet_28: -2141585563188764135
+      car_01_spritesheet_12: -3699482212157989688
+      car_01_spritesheet_30: 5570262638057564882
+      car_01_spritesheet_18: 7692839945688302889
+      car_01_spritesheet_142: -6352339213615684066
+      car_01_spritesheet_74: 660401943449929763
+      car_01_spritesheet_54: 943254833736253165
+      car_01_back: 3470340281606941108
+      car_01_spritesheet_21: -6375647219258139012
+      car_01_spritesheet_13: 6962356779093864674
+      car_01_spritesheet_86: 7032915083028131368
+      car_01_spritesheet_128: -4906224764942533705
+      car_01_spritesheet_41: -6195531872686411768
+      car_01_spritesheet_32: 5939641925090804387
+      car_01_spritesheet_105: 4059849567576024281
+      car_01_spritesheet_73: -7799144788334937792
+      car_01_spritesheet_9: 3206724964685158889
+      car_01_steering_right_02: -7529733875809418227
+      car_01_spritesheet_114: 668591248441824757
+      car_01_spritesheet_99: -7750802554560562576
+      car_01_spritesheet_71: 8774188630754372793
+      car_01_spritesheet_58: 6718385753610984578
+      car_01_spritesheet_123: -4376914121647369499
+      car_01_spritesheet_136: 5487756992015462885
+      car_01_spritesheet_120: 1047891383802041980
+      car_01_steering_left_03: 6214060599971483328
+      car_01_steering_right_03: 6783466239042069927
+      car_01_spritesheet_56: 1990900574169398214
+      car_01_spritesheet_93: 8151571111383076223
+      car_01_spritesheet_90: 6056673800825575452
+      car_01_spritesheet_35: -8919518322854625112
+      car_01_spritesheet_44: -6374721236080761917
+      car_01_spritesheet_55: 7702326159844341246
+      car_01_spritesheet_78: 5933448346926760130
+      car_01_spritesheet_57: -5823043191168663012
+      car_01_spritesheet_106: -6598093109751617086
+      car_01_spritesheet_7: -3994682444909346774
+      car_01_spritesheet_75: 8800700604732918232
+      car_01_spritesheet_62: 703944370906394044
+      car_01_spritesheet_45: -512682245294926762
+      car_01_spritesheet_100: -6744744631888543625
+      car_01_spritesheet_47: 743675957764858967
+      car_01_spritesheet_20: -2183943387175990998
+      car_01_spritesheet_94: 8031811087113473371
+      car_01_spritesheet_77: -4424973229882111300
+      car_01_spritesheet_98: -5233600692459328898
+      car_01_spritesheet_14: 4267293970876234922
+      car_01_spritesheet_50: 4455461009315183370
+      car_01_spritesheet_42: -1823396223696631480
+      car_01_spritesheet_83: -1643776328536706089
+      car_01_spritesheet_48: 1781881865811670641
+      car_01_steering_right_01: -3466916778147447128
+      car_01_spritesheet_49: 1055090514528310016
+      car_01_spritesheet_63: 6069103007101921747
+      car_01_spritesheet_61: 4746126414598664635
+      car_01_spritesheet_82: -6686758496121114327
+      car_01_spritesheet_95: 3652754308961631203
+      car_01_spritesheet_103: -7347706531442641665
+      car_01_spritesheet_51: 448028301778922057
+      car_01_spritesheet_132: -8565959458793012387
+      car_01_spritesheet_15: 4341718212674296764
+      car_01_spritesheet_127: 3040585395250652799
+      car_01_spritesheet_17: -2139424903510141351
+      car_01_spritesheet_59: -30102451384642334
+      car_01_spritesheet_102: 7288221521358838221
+      car_01_spritesheet_87: 2707239780616284915
+      car_01_spritesheet_33: -6053337956478513335
+      car_01_spritesheet_129: 3941366846493230411
+      car_01_spritesheet_8: -5007946831359963250
+      car_01_spritesheet_19: -4888846990710177185
+      car_01_spritesheet_10: -6143435316682223407
+      car_01_spritesheet_60: -7428523873917103171
+      car_01_spritesheet_64: 3682075814811592696
+      car_01_spritesheet_138: 4635865931278435213
+      car_01_spritesheet_46: 4990091382804557991
+      car_01_spritesheet_124: 8304003786051805206
+      car_01_spritesheet_31: 6034408105159358850
+      car_01_spritesheet_111: -5099723736033323849
+      car_01_spritesheet_38: -5601864866524879881
+      car_01_spritesheet_52: -3454029945416284875
+      car_01_spritesheet_43: -2613071920898511165
+      car_01_spritesheet_69: -4390174773016157396
+      car_01_spritesheet_110: 7525131860168587711
+      car_01_spritesheet_72: -4610997873966022167
+      car_01_spritesheet_0: 8633065457657227455
+      car_01_spritesheet_27: 267824991472170916
+      car_01_spritesheet_131: -9190959771371947778
+      car_01_spritesheet_4: 3733991450071312095
+      car_01_spritesheet_40: -646243706057054465
+      car_01_spritesheet_125: 7138676074382308948
+      car_01_spritesheet_91: -2598605236579551576
+      car_01_steering_left_01: 4686414783306193541
+      car_01_steering_right_04: 317874158524592197
+      car_01_spritesheet_137: 4127968806157015204
+      car_01_spritesheet_97: -6768158442625462163
+      car_01_spritesheet_109: -8359361365137142461
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

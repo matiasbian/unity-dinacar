@@ -102,11 +102,11 @@ namespace HQ
         {
             base.OnInspectorGUI();
             serializedObject.Update();
-            Modifier.isExpanded = EditorGUILayout.Foldout(Modifier.isExpanded, "Modifiers");
-            if (Modifier.isExpanded)
-            {
-                list.DoLayoutList();
-            }
+            //Modifier.isExpanded = EditorGUILayout.Foldout(Modifier.isExpanded, "Modifiers");
+           // if (Modifier.isExpanded)
+           // {
+           //     list.DoLayoutList();
+           // }
 
             serializedObject.ApplyModifiedProperties();
         }
